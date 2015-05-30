@@ -9,14 +9,23 @@ class window.App extends Backbone.Model
     # @on 'add' ->
     #   console.log('hit')
   evaluateScore:(hand) ->
-    console.log("evaluating", hand)
+    # @get ("dealerHand").first().flip()
+    # console.log(hand.first().flip())
+    # shown = false
+    if hand is @get('dealerHand') and not hand.first().reavealed
+      console.log('flipped over dealers first card')
+      hand.first().flip()
+      # shown = true
+
     currentScore = hand.minScore()
+    console.log("evaluating hand, score = ", currentScore)
     if currentScore > 21
       hand.hasBusted()
     else if currentScore < 17 and hand is @get 'dealerHand'
       hand.hit()
       @.evaluateScore(hand)
     else if hand is @get 'dealerHand'
+      console.log('dealer stands');
       hand.stand()
 
 

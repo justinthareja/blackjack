@@ -6,9 +6,14 @@ class window.Hand extends Backbone.Collection
   hit: ->
     @add(@deck.pop())
 
-  stand: =>
-    @.first().flip() if @isDealer is true
-    console.log("standing",@)
+  stand: ->
+    #we want @ to refer to the Hand collection
+    console.log(@)
+    # @.first().flip() if @.@isDealer is false
+    # console.log("player stands") if @isDealer is false
+
+
+    console.log("standing", @isDealer)
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
