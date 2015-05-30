@@ -20,4 +20,13 @@ class window.Hand extends Backbone.Collection
     # when there is an ace, it offers you two scores - the original score, and score + 10.
     [@minScore(), @minScore() + 10 * @hasAce()]
 
+  hasBusted: ->
+    console.log('the player has busted')
 
+# every hit, player or dealer we need to evaluate score
+# if the score is > 21
+  # emit some sort of "has busted" event
+# if the score is < 21
+  # if it's the player
+    # they can choose to hit again
+    # they can choose to stand
