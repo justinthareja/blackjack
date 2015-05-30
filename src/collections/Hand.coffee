@@ -7,13 +7,9 @@ class window.Hand extends Backbone.Collection
     @add(@deck.pop())
 
   stand: ->
-    #we want @ to refer to the Hand collection
-    console.log(@)
-    # @.first().flip() if @.@isDealer is false
-    # console.log("player stands") if @isDealer is false
-
-
-    console.log("standing", @isDealer)
+    if @isDealer is true
+      console.log("standing, time to print score")
+      @trigger 'dealerStands', @
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -30,15 +26,12 @@ class window.Hand extends Backbone.Collection
     [@minScore(), @minScore() + 10 * @hasAce()]
 
   hasBusted: ->
-    alert('Dealer busted!') if @isDealer is true
-    alert('you have busted! have a horrible day.') if @isDealer is false
+    alert('Dealer busted. You Win!') if @isDealer is true
+    alert('You busted, have a horrible day.') if @isDealer is false
 
     $('div').empty()
     new AppView(model: new App()).$el.appendTo 'body'
-# every hit, player or dealer we need to evaluate score
-# if the score is > 21
-  # emit some sort of "has busted" event
-# if the score is < 21
-  # if it's the player
-    # they can choose to hit again
-    # they can choose to stand
+
+  # printWinner: ->
+  #   alert('Dealer wins!') if @Dealer is true and
+  #     minScore

@@ -5,18 +5,14 @@ class window.App extends Backbone.Model
     @set 'deck', deck = new Deck()
     @set 'playerHand', deck.dealPlayer()
     @set 'dealerHand', deck.dealDealer()
+    @get('dealerHand').on 'dealerStands', @printWinner, @
 
-    # @on 'add' ->
-    #   console.log('hit')
   evaluateScore:(hand) ->
-    # @get ("dealerHand").first().flip()
-    # console.log(hand.first().flip())
-    # shown = false
+    # flips over dealer's first card
     if hand is @get('dealerHand') and not hand.first().get('revealed')
       console.log(hand.first().get('revealed'))
       console.log('flipped over dealers first card')
       hand.first().flip()
-      # shown = true
 
     currentScore = hand.minScore()
     console.log("evaluating hand, score = ", currentScore)
@@ -29,15 +25,18 @@ class window.App extends Backbone.Model
       console.log('dealer stands');
       hand.stand()
 
+  printWinner: ->
+    playerScore = @get('playerHand').minScore()
+    dealerScore = @get('dealerHand').minScore()
 
-    # console.log(@get 'playerHand')
+    if dealerScore > playerScore or dealerScore is 21
+      alert('Dealer wins with a ' + dealerScore)
+    else if dealerScore < playerScore
+      alert('Dealer drew ' + dealerScore + ". You Win!")
+    else
+      alert('Push')
 
-    #set up a listener that listens for an add event
-      #on add fire an evaluateScore method
+    $('div').empty()
+    new AppView(model: new App()).$el.appendTo 'body'
 
-    #define evaluateScore method that takes current hand and checks to see if score > 21
-     #if > 21, trigger a hasBusted event.
-      #determine who triggered hasBusted
-       #if dealer hasBusted, player wins
-       #if player hasBusted, dealer wins, restart
 
