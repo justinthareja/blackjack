@@ -12,7 +12,8 @@ class window.App extends Backbone.Model
     # @get ("dealerHand").first().flip()
     # console.log(hand.first().flip())
     # shown = false
-    if hand is @get('dealerHand') and not hand.first().reavealed
+    if hand is @get('dealerHand') and not hand.first().get('revealed')
+      console.log(hand.first().get('revealed'))
       console.log('flipped over dealers first card')
       hand.first().flip()
       # shown = true
