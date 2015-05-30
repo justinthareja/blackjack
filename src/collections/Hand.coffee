@@ -5,6 +5,9 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
+  stand: ->
+    console.log("standing")
+
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1
@@ -21,8 +24,11 @@ class window.Hand extends Backbone.Collection
     [@minScore(), @minScore() + 10 * @hasAce()]
 
   hasBusted: ->
-    console.log('the player has busted')
+    alert('Dealer busted!') if @isDealer is true
+    alert('you have busted! have a horrible day.') if @isDealer is false
 
+    $('div').empty()
+    new AppView(model: new App()).$el.appendTo 'body'
 # every hit, player or dealer we need to evaluate score
 # if the score is > 21
   # emit some sort of "has busted" event
