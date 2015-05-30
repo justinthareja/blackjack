@@ -8,7 +8,6 @@ class window.Hand extends Backbone.Collection
 
   stand: ->
     if @isDealer is true
-      console.log("standing, time to print score")
       @trigger 'dealerStands', @
 
   hasAce: -> @reduce (memo, card) ->
