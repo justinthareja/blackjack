@@ -5,9 +5,10 @@ class window.Hand extends Backbone.Collection
 
   hit: ->
     @add(@deck.pop())
-  stand: ->
-    console.log("standing")
 
+  stand: =>
+    @.first().flip() if @isDealer is true
+    console.log("standing",@)
 
   hasAce: -> @reduce (memo, card) ->
     memo or card.get('value') is 1

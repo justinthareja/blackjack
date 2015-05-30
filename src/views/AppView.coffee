@@ -9,8 +9,10 @@ class window.AppView extends Backbone.View
     'click .hit-button': ->
       @model.get('playerHand').hit()
       @model.evaluateScore(@model.get('playerHand'))
+
     'click .stand-button': ->
       @model.get('playerHand').stand()
+      @model.evaluateScore(@model.get('dealerHand'))
 
 
   initialize: ->

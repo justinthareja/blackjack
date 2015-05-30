@@ -9,12 +9,15 @@ class window.App extends Backbone.Model
     # @on 'add' ->
     #   console.log('hit')
   evaluateScore:(hand) ->
-    console.log("evaluating player's hand")
+    console.log("evaluating", hand)
     currentScore = hand.minScore()
-    #if score > 21 trigger hasBusted event
-    if currentScore > 21 then hand.hasBusted()
-
-
+    if currentScore > 21
+      hand.hasBusted()
+    else if currentScore < 17 and hand is @get 'dealerHand'
+      hand.hit()
+      @.evaluateScore(hand)
+    else if hand is @get 'dealerHand'
+      hand.stand()
 
 
     # console.log(@get 'playerHand')
